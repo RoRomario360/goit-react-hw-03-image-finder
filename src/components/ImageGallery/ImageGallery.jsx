@@ -44,11 +44,9 @@ export class ImageGallery extends Component {
   render() {
     const { images, status } = this.state;
 
-    //FIXME:
     if (status === STATUS.Loading) {
       return <Loader />;
     }
-    //
 
     return (
       <>
@@ -63,6 +61,8 @@ export class ImageGallery extends Component {
             );
           })}
         </ul>
+
+        <button type="button">Load more</button>
       </>
     );
   }
