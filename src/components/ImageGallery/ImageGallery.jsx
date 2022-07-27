@@ -80,6 +80,7 @@ export class ImageGallery extends Component {
               );
             })}
           </ul>
+
           {totalHits >= 12 * page && <Button onClick={this.handleLoadMore} />}
         </>
       );
