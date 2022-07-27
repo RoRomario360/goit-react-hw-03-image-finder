@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { RequestApi } from 'components/Api/ReguestApi';
 import { GalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
 import { toast } from 'react-toastify';
 import s from './ImageGallery.module.css';
@@ -41,30 +42,47 @@ export class ImageGallery extends Component {
     }
   }
 
+  //FIXME:
+  handleLoadMore = () => {
+    RequestApi(this.props.search, this.state.page)
+      .then(response => {
+        const { hits } = response.data;
+        this.setState(prevState => ({
+          images: [...prevState.images, ...hits],
+          page: prevState.page + 1,
+        }));
+      })
+      .catch(error => {
+        this.setState(console.log(error));
+      });
+  };
+  //
+
   render() {
-    const { images, status } = this.state;
+    const { images, status, totalHits, page } = this.state;
 
     if (status === STATUS.Loading) {
       return <Loader />;
     }
 
-    return (
-      <>
-        <ul className={s.galleryList}>
-          {images.map(({ id, webformatURL, largeImageURL }) => {
-            return (
-              <GalleryItem
-                key={id}
-                imgPrew={webformatURL}
-                imgLarge={largeImageURL}
-                handlerOpenModal={this.props.handlerOpenModal}
-              />
-            );
-          })}
-        </ul>
-
-        <button type="button">Load more</button>
-      </>
-    );
+    if (status === STATUS.Success) {
+      return (
+        <>
+          <ul className={s.galleryList}>
+            {images.map(({ id, webformatURL, largeImageURL }) => {
+              return (
+                <GalleryItem
+                  key={id}
+                  imgPrew={webformatURL}
+                  imgLarge={largeImageURL}
+                  handlerOpenModal={this.props.handlerOpenModal}
+                />
+              );
+            })}
+          </ul>
+          {totalHits >= 12 * page && <Button onClick={this.handleLoadMore} />}
+        </>
+      );
+    }
   }
 }
