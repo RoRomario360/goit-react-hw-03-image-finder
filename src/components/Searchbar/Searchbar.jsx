@@ -1,7 +1,12 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import s from './SearchBar.module.css';
 
 export class Searchbar extends Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
   state = {
     query: '',
   };
@@ -12,8 +17,21 @@ export class Searchbar extends Component {
 
   handlerSubmit = e => {
     const { query } = this.state;
+    if (!query.trim()) {
+      toast.error('empty field', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
     e.preventDefault();
     this.props.onSubmit(query);
+    this.setState({ query: '' });
   };
 
   render() {

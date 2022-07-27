@@ -4,6 +4,7 @@ import { GalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 import s from './ImageGallery.module.css';
 
 const STATUS = {
@@ -14,6 +15,11 @@ const STATUS = {
 };
 
 export class ImageGallery extends Component {
+  static propTypes = {
+    handlerOpenModal: PropTypes.func.isRequired,
+    query: PropTypes.string.isRequired,
+  };
+
   state = {
     images: [],
     totalHits: null,
@@ -42,7 +48,6 @@ export class ImageGallery extends Component {
     }
   }
 
-  //FIXME:
   handleLoadMore = () => {
     RequestApi(this.props.search, this.state.page)
       .then(response => {
@@ -56,7 +61,6 @@ export class ImageGallery extends Component {
         this.setState(console.log(error));
       });
   };
-  //
 
   render() {
     const { images, status, totalHits, page } = this.state;

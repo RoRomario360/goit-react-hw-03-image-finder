@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import s from './ImageGalleryItem.module.css';
 
 export const GalleryItem = ({ imgPrew, imgLarge, handlerOpenModal }) => {
-  console.log(imgLarge);
   return (
     <li className={s.gallery__item}>
       <img
@@ -12,4 +12,10 @@ export const GalleryItem = ({ imgPrew, imgLarge, handlerOpenModal }) => {
       />
     </li>
   );
+};
+
+GalleryItem.propTypes = {
+  imgPrew: PropTypes.string.isRequired,
+  imgLarge: PropTypes.string.isRequired,
+  handlerOpenModal: PropTypes.func.isRequired,
 };
