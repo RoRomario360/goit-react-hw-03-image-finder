@@ -49,7 +49,7 @@ export class ImageGallery extends Component {
   }
 
   handleLoadMore = () => {
-    RequestApi(this.props.search, this.state.page)
+    RequestApi(this.props.query, this.state.page)
       .then(response => {
         const { hits } = response.data;
         this.setState(prevState => ({
