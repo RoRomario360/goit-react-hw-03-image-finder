@@ -57,6 +57,7 @@ export class ImageGallery extends Component {
                 key={id}
                 imgPrew={webformatURL}
                 imgLarge={largeImageURL}
+                handlerOpenModal={this.props.handlerOpenModal}
               />
             );
           })}
