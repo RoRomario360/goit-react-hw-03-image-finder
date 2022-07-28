@@ -17,6 +17,7 @@ export class Searchbar extends Component {
 
   handlerSubmit = e => {
     const { query } = this.state;
+
     if (!query.trim()) {
       toast.error('empty field', {
         position: 'top-right',
